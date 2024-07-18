@@ -467,3 +467,61 @@ func Test_newHeaderResultPage(t *testing.T) {
 	page := newHeaderResultPage(columnNames, columnTypes, data)
 	assert.NotNil(t, page)
 }
+
+func TestFormatString(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "Empty string",
+			input:    "",
+			expected: "''",
+		},
+		{
+			name:     "No special characters",
+			input:    "This is a description string with no special characters",
+			expected: "'This is a description string with no special characters'",
+		},
+		{
+			name:     "Special characters are escaped",
+			input:    "Athena's query's param\n",
+			expected: "'Athena''s query''s param\\n'",
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.expected, FormatString(tc.input))
+		})
+	}
+}
+
+func TestFormatBytes(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    []byte
+		expected []byte
+	}{
+		{
+			name:     "Empty byte slice",
+			input:    []byte{},
+			expected: []byte("_binary''"),
+		},
+		{
+			name:     "No special characters",
+			input:    []byte("This is a description string with no special characters"),
+			expected: []byte("_binary'This is a description string with no special characters'"),
+		},
+		{
+			name:     "Special characters are escaped",
+			input:    []byte("Athena's query's param\n"),
+			expected: []byte("_binary'Athena''s query''s param\\n'"),
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.expected, FormatBytes(tc.input))
+		})
+	}
+}
