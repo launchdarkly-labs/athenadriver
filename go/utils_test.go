@@ -238,8 +238,11 @@ func TestEscapeBytesBackslash(t *testing.T) {
 	r = escapeBytesBackslash([]byte{}, []byte{'\x1a'})
 	assert.Equal(t, string(r), "\\Z")
 
+	// Single quotes can be escaped by adding another single quote.
+	// https://docs.aws.amazon.com/athena/latest/ug/select.html
+	// https://docs.aws.amazon.com/athena/latest/ug/data-types.html#data-types-considerations
 	r = escapeBytesBackslash([]byte{}, []byte{'\''})
-	assert.Equal(t, string(r), `\'`)
+	assert.Equal(t, string(r), `''`)
 
 	r = escapeBytesBackslash([]byte{}, []byte{'"'})
 	assert.Equal(t, string(r), `\"`)

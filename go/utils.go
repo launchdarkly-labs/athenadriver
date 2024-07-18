@@ -619,7 +619,10 @@ func escapeBytesBackslash(buf, v []byte) []byte {
 			buf[pos+1] = 'Z'
 			pos += 2
 		case '\'':
-			buf[pos] = '\\'
+			// Single quotes can be escaped by adding another single quote.
+			// https://docs.aws.amazon.com/athena/latest/ug/select.html
+			// https://docs.aws.amazon.com/athena/latest/ug/data-types.html#data-types-considerations
+			buf[pos] = '\''
 			buf[pos+1] = '\''
 			pos += 2
 		case '"':
