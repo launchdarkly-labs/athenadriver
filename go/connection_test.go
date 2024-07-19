@@ -287,6 +287,37 @@ func TestInterpolateParamsUint64(t *testing.T) {
 	assert.Equal(t, q, "SELECT 42")
 }
 
+func TestInterpolateParamsDateOnly(t *testing.T) {
+	testTime, err := time.Parse(time.DateOnly, "2024-07-01")
+	assert.Nil(t, err)
+
+	c := createTestConnection(t)
+	q, err := c.interpolateParams("SELECT ?", []driver.Value{testTime})
+	assert.Nil(t, err)
+	assert.Equal(t, "SELECT '2024-07-01 00:00:00'", q)
+}
+
+func TestInterpolateParamsTime(t *testing.T) {
+	testTime, err := time.Parse(time.RFC3339, "2024-07-01T01:02:03Z")
+	assert.Nil(t, err)
+
+	c := createTestConnection(t)
+	q, err := c.interpolateParams("SELECT ?", []driver.Value{testTime})
+	assert.Nil(t, err)
+	assert.Equal(t, "SELECT '2024-07-01 01:02:03'", q)
+}
+
+func TestInterpolateParamsTimeMicro(t *testing.T) {
+	testTimeMicro, err := time.Parse(time.RFC3339, "2024-07-02T01:02:03Z")
+	assert.Nil(t, err)
+	testTimeMicro = testTimeMicro.Add(time.Microsecond * 123456)
+
+	c := createTestConnection(t)
+	q, err := c.interpolateParams("SELECT ?", []driver.Value{testTimeMicro})
+	assert.Nil(t, err)
+	assert.Equal(t, "SELECT '2024-07-02 01:02:03.123456'", q)
+}
+
 func TestBuildExecutionParams(t *testing.T) {
 	testTime, err := time.Parse(time.RFC3339, "2024-07-01T00:00:00Z")
 	assert.Nil(t, err)
