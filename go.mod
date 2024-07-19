@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.4.1
-	github.com/aws/aws-sdk-go v1.54.19
+	github.com/aws/aws-sdk-go v1.51.3
 	github.com/cactus/go-statsd-client/statsd v0.0.0-20200423205355-cb0885a1018c
 	github.com/jedib0t/go-pretty/v6 v6.2.7
 	github.com/pkg/errors v0.9.1 // indirect
@@ -14,5 +14,4 @@ require (
 	go.uber.org/config v1.4.0
 	go.uber.org/fx v1.12.0
 	go.uber.org/zap v1.15.0
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
 )
