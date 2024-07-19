@@ -81,7 +81,8 @@ func (c *Connection) buildExecutionParams(args []driver.Value) ([]*string, error
 			// up to microsecond granularity, which Athena does not support in TIMESTAMP columns (up to milliseconds).
 			// For DATE/TIME/TIMESTAMP, it is better to pass in string arguments with a typecast. Refer to the string
 			// case below.
-			val = "'0000-00-00'"
+			// Matches interpolateParams() behavior.
+			val = "'0000-00-00'" // Special-cased.
 			if !v.IsZero() {
 				v := v.In(time.UTC)
 				v = v.Add(time.Nanosecond * 500) // To round under microsecond

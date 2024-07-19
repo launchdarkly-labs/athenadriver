@@ -347,13 +347,14 @@ func TestBuildExecutionParams(t *testing.T) {
 			name:        "Zero-value time",
 			inputArgs:   []driver.Value{time.Time{}},
 			expectedErr: nil,
-			expected:    []*string{aws.String("'0000-00-00'")},
+			expected:    []*string{aws.String("'0000-00-00'")}, // Special-cased. Matches interpolateParams behavior.
 		},
 		{
+			// Like interpolateParams(), buildExecutionParams() adds an additional 500 nanoseconds.
 			name:        "501 nanoseconds is still < 1 microsecond", // From TestConnection_InterpolateParams_Bool
 			inputArgs:   []driver.Value{time.Time{}.Add(1 * time.Nanosecond)},
 			expectedErr: nil,
-			expected:    []*string{aws.String("'0001-01-01 00:00:00'")},
+			expected:    []*string{aws.String("'0001-01-01 00:00:00'")}, // Matches interpolateParams behavior.
 		},
 		{
 			name:        "For non-zero-value time.Times, Date and time are present, even if time is zero-value",
