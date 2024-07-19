@@ -352,7 +352,7 @@ func TestBuildExecutionParams(t *testing.T) {
 		{
 			// Like interpolateParams(), buildExecutionParams() adds an additional 500 nanoseconds.
 			name:        "501 nanoseconds is still < 1 microsecond", // From TestConnection_InterpolateParams_Bool
-			inputArgs:   []driver.Value{time.Time{}.Add(1 * time.Nanosecond)},
+			inputArgs:   []driver.Value{time.Time{}.Add(time.Nanosecond)},
 			expectedErr: nil,
 			expected:    []*string{aws.String("'0001-01-01 00:00:00'")}, // Matches interpolateParams behavior.
 		},
