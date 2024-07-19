@@ -409,14 +409,14 @@ func TestBuildExecutionParams(t *testing.T) {
 	c := createTestConnection(t)
 	for _, tc := range testCases {
 		// https://go.dev/blog/loopvar-preview
-		// Pre-Go-1.22, the loop variable `tc` is shared between each loop iteration. Because t.Parallel() is true,
-		// the test cases run concurrently, and `tc` is likely to change mid-test. We can avoid that by creating a
-		// local copy.
-		tcCopy := tc
-		t.Run(tcCopy.name, func(t *testing.T) {
-			actual, err := c.buildExecutionParams(tcCopy.inputArgs)
-			assert.Equal(t, tcCopy.expectedErr, err)
-			assert.Equal(t, tcCopy.expected, actual)
+		// Pre-Go-1.22, the loop variable `tc` is shared between each loop iteration. Because t.Parallel() is called
+		// in createTestConnection(), the test cases run concurrently, and `tc` is likely to change mid-test. We can
+		// avoid that by creating a local copy.
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := c.buildExecutionParams(tc.inputArgs)
+			assert.Equal(t, tc.expectedErr, err)
+			assert.Equal(t, tc.expected, actual)
 		})
 	}
 }
