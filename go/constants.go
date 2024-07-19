@@ -25,7 +25,7 @@ type TContextKey string
 
 const (
 	// DriverName is the Name of this DB driver.
-	DriverName = "awsathena"
+	DriverName = "awsathenaLD"
 
 	// DefaultBytesScannedCutoffPerQuery is 1G for every user.
 	DefaultBytesScannedCutoffPerQuery = 1024 * 1024 * 1024
