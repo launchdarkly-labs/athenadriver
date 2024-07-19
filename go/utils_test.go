@@ -239,7 +239,7 @@ func TestEscapeBytesBackslash(t *testing.T) {
 	assert.Equal(t, string(r), "\\Z")
 
 	// Single quotes can be escaped by adding another single quote.
-	// https://docs.aws.amazon.com/athena/latest/ug/select.html
+	// https://docs.aws.amazon.com/athena/latest/ug/select.html#select-escaping
 	// https://docs.aws.amazon.com/athena/latest/ug/data-types.html#data-types-considerations
 	r = escapeBytesBackslash([]byte{}, []byte{'\''})
 	assert.Equal(t, string(r), `''`)
