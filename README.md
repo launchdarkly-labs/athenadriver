@@ -479,7 +479,7 @@ Athena supports parameterized queries: https://docs.aws.amazon.com/athena/latest
 Parameterized queries allow for re-running the same query with different parameter values at runtime, and help guard 
 against SQL injection attacks. This is especially useful if some of your parameter values are derived from user input.
 
-To use parameterized queries, use `?` as placeholders in the query you're passing to `DB.Query()` or `DB.Exec()`.
+To use parameterized queries, use `?` as placeholders in the query you pass to `DB.Query()` or `DB.Exec()`.
 For each parameter, pass in arguments in the order they should replace `?`. For strings and byte slice arguments, use 
 `drv.FormatString()` and `drv.FormatBytes()` to escape special characters and format per Athena's requirements.
 
